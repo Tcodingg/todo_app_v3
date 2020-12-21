@@ -4,11 +4,8 @@ import './index.css';
 export default function Todo() {
   const [item, setItem] = useState('');
   const [itemList, setItemList] = useState([]);
-  const [isDone, setIsDone] = useState(false);
 
   function handleChange(event) {
-    event.preventDefault();
-
     const inputValues = event.target.value;
     setItem(inputValues);
   }
@@ -18,10 +15,8 @@ export default function Todo() {
     setItemList((preValue) => [...preValue, item]);
     setItem('');
   }
-  function crossOut() {
-    setIsDone((preValue) => !preValue);
-    console.log(isDone);
-    itemList.filter((x)=>())
+  function handleDelete(index) {
+    setItemList(itemList.filter((todoItems, i) => i !== index));
   }
 
   return (
@@ -41,9 +36,11 @@ export default function Todo() {
             .map((todos, index) => {
               return (
                 <li
-                  onClick={crossOut}
+                  onClick={() => {
+                    handleDelete(index);
+                  }}
                   key={index}
-                  style={{ textDecoration: isDone ? 'line-through' : 'none' }}
+                  id={index}
                 >
                   {todos}
                 </li>
